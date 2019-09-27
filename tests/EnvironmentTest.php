@@ -60,6 +60,10 @@ class EnvironmentTest extends TestCase
         putenv('CONF_DIR');
         putenv('EXT_DIR');
         putenv('ROOT_DIR');
+
+        // test exception
+        $this->expectException(\RuntimeException::class);
+        $this->invokeMethod('load', ['notExistingFile']);
     }
 
     public function testParse()

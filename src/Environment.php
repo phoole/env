@@ -21,6 +21,7 @@ class Environment
      *
      * @param  string $path          full path of the .env file
      * @param  bool   $overwrite     overwrite existing values
+     * @throws \RuntimeException     if $path not readable
      * @return object $this          able to chain
      */
     public function load(string $path, bool $overwrite = false): object
@@ -46,15 +47,20 @@ class Environment
     /**
      * load content of a file into array
      *
-     * @param  string $path full path of the .env file
+     * @param  string $path        full path of the .env file
+     * @throws \RuntimeException   if $path not readable
      * @return array
      */
     protected function loadPath(string $path): array
     {
-        if ($str = \file_get_contents($path)) {
-            return $this->parseString($str);
+        try {
+            if ($str = \file_get_contents($path)) {
+                return $this->parseString($str);
+            }
+            return [];
+        } catch (\Throwable $e) {
+            throw new \RuntimeException($e->getMessage());
         }
-        return [];
     }
 
     /**
