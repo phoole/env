@@ -6,38 +6,38 @@
  * @package   Phoole\Env
  * @copyright Copyright (c) 2019 Hong Zhang
  */
-namespace Phossa2\Env;
+namespace Phoole\Env;
 
 /**
  * Load environment key/value pairs from certain path.
  *
  * @package Phoole\Env
- * @version 0.1
+ * @version 1.0
  */
 class Environment
 {
     /**
-     * load environment from a file
-     * 
+     * Load environment variables from a .env file
+     *
      * @param  string $path          full path of the .env file
-     * @param  bool   $overwrite     overwrite existing env values or not
-     * @return object $this
+     * @param  bool   $overwrite     overwrite existing values
+     * @return object $this          able to chain
      */
-    public function load(string $path, bool $overwrite = true): object
+    public function load(string $path, bool $overwrite = false): object
     {
         return $this->parse($this->loadPath($path), $overwrite);
     }
 
     /**
-     * parse an array to set environment
-     * 
+     * Parse an array to set environment variables
+     *
      * @param  array  $arr          full path of the .env file
-     * @param  bool   $overwrite    overwrite existing env values or not
-     * @return object $this
+     * @param  bool   $overwrite    overwrite existing env values
+     * @return object $this         able to chain
      */
-    public function parse(array $arr, bool $overwrite = true): object
+    public function parse(array $arr, bool $overwrite = false): object
     {
-        foreach($arr as $key => $val) {
+        foreach ($arr as $key => $val) {
             $this->setEnv($key, $this->deReference($val), $overwrite);
         }
         return $this;
@@ -45,7 +45,7 @@ class Environment
 
     /**
      * load content of a file into array
-     * 
+     *
      * @param  string $path full path of the .env file
      * @return array
      */
@@ -59,7 +59,7 @@ class Environment
 
     /**
      * Parse 'ENV = value' into pairs
-     * 
+     *
      * @param  string $str  string to parse
      * @return array
      */
@@ -80,7 +80,7 @@ class Environment
 
         $pairs = [];
         if (\preg_match_all($regex, $str, $matched, \PREG_SET_ORDER)) {
-            foreach($matched as $m) {
+            foreach ($matched as $m) {
                 if (isset($m[3])) {
                     $pairs[$m[1]] = $m[3];
                 } else {
@@ -93,17 +93,44 @@ class Environment
 
     /**
      * replace ${ENV} into real value
-     * 
+     *
      * @param  string $str string to de-reference
      * @return string
      */
     protected function deReference(string $str): string
     {
+        if (false === strpos($str, '${')) {
+            return $str;
+        }
+
         return preg_replace_callback(
-            '~(\$\{([^\}]+)\})~',
-            function($matched) {
-                return (string)getenv($matched[2]);
-            }, $str);
+            '~(\${((?:[^\${}]+|(?R))*)})~',
+            function ($matched) {
+                return $this->expandValue(self::deReference($matched[2]));
+            },
+            $str
+        );
+    }
+
+    /**
+     * expand with bash style default value
+     *
+     *   :- replace with default value if not set
+     *   := set & replace with default value if not set
+     *
+     * @param  string $str str to expand
+     * @return string
+     */
+    protected function expandValue(string $str): string
+    {
+        $default = '';
+        if (false !== strpos($str, ':-')) {
+            list($str, $default) = explode(':-', $str, 2);
+        } elseif (false !== strpos($str, ':=')) {
+            list($str, $default) = explode(':=', $str, 2);
+            $this->setEnv($str, $default, false);
+        }
+        return getenv($str) === false ? $default : getenv($str);
     }
 
     /**
