@@ -12,7 +12,7 @@ namespace Phoole\Env;
  * Load environment key/value pairs from certain path.
  *
  * @package Phoole\Env
- * @version 1.0
+ * @version 1.0.1
  */
 class Environment
 {

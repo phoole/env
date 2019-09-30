@@ -14,7 +14,7 @@ Installation
 Install via the `composer` utility.
 
 ```
-composer require "phoole/env"
+composer require "phoole/env=1.*.*"
 ```
 
 or add the following lines to your `composer.json`
@@ -22,7 +22,7 @@ or add the following lines to your `composer.json`
 ```json
 {
     "require": {
-       "phoole/env": "^1.0"
+       "phoole/env": "~1.0.0"
     }
 }
 ```
