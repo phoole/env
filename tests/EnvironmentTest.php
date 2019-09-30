@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Phoole\Tests;
 
@@ -105,7 +107,6 @@ class EnvironmentTest extends TestCase
         putenv('ETC_NAME');
         putenv('ETC_DIR');
         putenv('MY_ROOT');
-
     }
 
     public function testLoadPath()

@@ -2,11 +2,11 @@
 [![Build Status](https://travis-ci.com/phoole/env.svg?branch=master)](https://travis-ci.com/phoole/env)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phoole/env/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phoole/env/?branch=master)
 
-**phoole/env** is a library to load environment variables from a .env file. It requires PHP 7.2+ and is compliant with [PSR-1][PSR-1], [PSR-2][PSR-2], [PSR-4][PSR-4].
+**phoole/env** is a library to load environment variables from a .env file. It requires PHP 7.2+ and is compliant with [PSR-1][PSR-1], [PSR-4][PSR-4], [PSR-12][PSR-12].
 
 [PSR-1]: http://www.php-fig.org/psr/psr-1/ "PSR-1: Basic Coding Standard"
-[PSR-2]: http://www.php-fig.org/psr/psr-2/ "PSR-2: Coding Style Guide"
 [PSR-4]: http://www.php-fig.org/psr/psr-4/ "PSR-4: Autoloader"
+[PSR-12]: http://www.php-fig.org/psr/psr-2/ "PSR-12: Extended Coding Style Guide"
 [variable]: https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html "Shell Variable Expansion"
 
 Installation
@@ -84,7 +84,7 @@ Features
   ROOT_DIR="/var/tmp"
   ```
 
-- [PSR-1][PSR-1], [PSR-2][PSR-2], [PSR-4][PSR-4] compliant.
+- [PSR-1][PSR-1], [PSR-4][PSR-4], [PSR-12][PSR-12] compliant.
 
 Testing
 ---

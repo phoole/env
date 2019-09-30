@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /**
  * Phoole (PHP7.2+)
  *
@@ -6,13 +6,14 @@
  * @package   Phoole\Env
  * @copyright Copyright (c) 2019 Hong Zhang
  */
+declare(strict_types=1);
+
 namespace Phoole\Env;
 
 /**
  * Load environment key/value pairs from certain path.
  *
  * @package Phoole\Env
- * @version 1.0.1
  */
 class Environment
 {
