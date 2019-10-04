@@ -10,13 +10,17 @@ declare(strict_types=1);
 
 namespace Phoole\Env;
 
+use Phoole\Base\Reference\{ReferenceTrait, ReferenceInterface};
+
 /**
  * Load environment key/value pairs from certain path.
  *
  * @package Phoole\Env
  */
-class Environment
+class Environment implements ReferenceInterface
 {
+    use ReferenceTrait;
+
     /**
      * Load environment variables from a .env file
      *
@@ -40,7 +44,7 @@ class Environment
     public function parse(array $arr, bool $overwrite = false): object
     {
         foreach ($arr as $key => $val) {
-            $this->setEnv($key, $this->deReference($val), $overwrite);
+            $this->setEnv($key, $this->deReferenceString($val), $overwrite);
         }
         return $this;
     }
@@ -99,45 +103,18 @@ class Environment
     }
 
     /**
-     * replace ${ENV} into real value
-     *
-     * @param  string $str string to de-reference
-     * @return string
+     * {@inheritDoc}
      */
-    protected function deReference(string $str): string
-    {
-        if (false === strpos($str, '${')) {
-            return $str;
-        }
-
-        return preg_replace_callback(
-            '~(\${((?:[^\${}]+|(?R))*)})~',
-            function ($matched) {
-                return $this->expandValue(self::deReference($matched[2]));
-            },
-            $str
-        );
-    }
-
-    /**
-     * expand with bash style default value
-     *
-     *   :- replace with default value if not set
-     *   := set & replace with default value if not set
-     *
-     * @param  string $str str to expand
-     * @return string
-     */
-    protected function expandValue(string $str): string
+    protected function getReference(string $name)
     {
         $default = '';
-        if (false !== strpos($str, ':-')) {
-            list($str, $default) = explode(':-', $str, 2);
-        } elseif (false !== strpos($str, ':=')) {
-            list($str, $default) = explode(':=', $str, 2);
-            $this->setEnv($str, $default, false);
+        if (false !== strpos($name, ':-')) {
+            list($name, $default) = explode(':-', $name, 2);
+        } elseif (false !== strpos($name, ':=')) {
+            list($name, $default) = explode(':=', $name, 2);
+            $this->setEnv($name, $default, false);
         }
-        return getenv($str) === false ? $default : getenv($str);
+        return getenv($name) === false ? $default : getenv($name);
     }
 
     /**

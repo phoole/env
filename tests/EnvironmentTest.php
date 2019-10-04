@@ -165,14 +165,14 @@ class EnvironmentTest extends TestCase
     {
         # not set
         $this->assertEquals(
-            $this->invokeMethod('deReference', ['${ENV_TEST}/bin']),
+            $this->invokeMethod('deReferenceString', ['${ENV_TEST}/bin']),
             '/bin'
         );
 
         # set
         putenv('ENV_TEST=/usr/local');
         $this->assertEquals(
-            $this->invokeMethod('deReference', ['${ENV_TEST}/bin']),
+            $this->invokeMethod('deReferenceString', ['${ENV_TEST}/bin']),
             '/usr/local/bin'
         );
         putenv('ENV_TEST');
@@ -181,7 +181,7 @@ class EnvironmentTest extends TestCase
         putenv('ENV_TEST=/usr/local');
         putenv('ENV_TEST_BIN=bin');
         $this->assertEquals(
-            $this->invokeMethod('deReference', ['${ENV_TEST}/${ENV_TEST_BIN}']),
+            $this->invokeMethod('deReferenceString', ['${ENV_TEST}/${ENV_TEST_BIN}']),
             '/usr/local/bin'
         );
         putenv('ENV_TEST');
@@ -191,19 +191,19 @@ class EnvironmentTest extends TestCase
         putenv('ENV_TEST=/usr/local');
         putenv('TEST_USER=TEST');
         $this->assertEquals(
-            $this->invokeMethod('deReference', ['${ENV_${TEST_USER}}/bin/${TEST_USER}']),
+            $this->invokeMethod('deReferenceString', ['${ENV_${TEST_USER}}/bin/${TEST_USER}']),
             '/usr/local/bin/TEST'
         );
         putenv('ENV_TEST');
         putenv('TEST_USER');
     }
 
-    public function testExpandValue()
+    public function testGetReference()
     {
         # not set, use provided value
         putenv('ENV_TEST');
         $this->assertEquals(
-            $this->invokeMethod('expandValue', ['ENV_TEST:-test']),
+            $this->invokeMethod('getReference', ['ENV_TEST:-test']),
             'test'
         );
         $this->assertTrue(getenv('ENV_TEST') === false);
@@ -211,7 +211,7 @@ class EnvironmentTest extends TestCase
         # use preset value
         putenv('ENV_TEST=bingo');
         $this->assertEquals(
-            $this->invokeMethod('expandValue', ['ENV_TEST:-test']),
+            $this->invokeMethod('getReference', ['ENV_TEST:-test']),
             'bingo'
         );
         putenv('ENV_TEST');
@@ -219,14 +219,14 @@ class EnvironmentTest extends TestCase
         # use set value
         putenv('ENV_TEST=bingo');
         $this->assertEquals(
-            $this->invokeMethod('expandValue', ['ENV_TEST:=test']),
+            $this->invokeMethod('getReference', ['ENV_TEST:=test']),
             'bingo'
         );
 
         # set if not set yet
         putenv('ENV_TEST');
         $this->assertEquals(
-            $this->invokeMethod('expandValue', ['ENV_TEST:=test']),
+            $this->invokeMethod('getReference', ['ENV_TEST:=test']),
             'test'
         );
         $this->assertTrue(getenv('ENV_TEST') === 'test');
