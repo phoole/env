@@ -2,8 +2,8 @@
 [![Build Status](https://travis-ci.com/phoole/env.svg?branch=master)](https://travis-ci.com/phoole/env)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phoole/env/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phoole/env/?branch=master)
 [![Code Climate](https://codeclimate.com/github/phoole/env/badges/gpa.svg)](https://codeclimate.com/github/phoole/env)
-[![PHP 7](https://img.shields.io/packagist/php-v/phoole/env/1.0.3)](https://packagist.org/packages/phoole/env)
-[![Latest Stable Version](https://img.shields.io/packagist/vpre/phoole/env.svg?style=flat)](https://packagist.org/packages/phoole/env)
+[![PHP 7](https://img.shields.io/packagist/php-v/phoole/env)](https://packagist.org/packages/phoole/env)
+[![Latest Stable Version](https://img.shields.io/github/v/release/phoole/env)](https://packagist.org/packages/phoole/env)
 [![License](https://img.shields.io/github/license/phoole/env)]()
 
 **phoole/env** is a library to load environment variables from a .env file. It requires PHP 7.2+ and is compliant with [PSR-1][PSR-1], [PSR-4][PSR-4], [PSR-12][PSR-12].
