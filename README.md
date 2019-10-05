@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.com/phoole/env.svg?branch=master)](https://travis-ci.com/phoole/env)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phoole/env/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phoole/env/?branch=master)
 [![Code Climate](https://codeclimate.com/github/phoole/env/badges/gpa.svg)](https://codeclimate.com/github/phoole/env)
-[![PHP 7](https://img.shields.io/packagist/php-v/phoole/env/1.0.0)](https://packagist.org/packages/phoole/env)
+[![PHP 7](https://img.shields.io/packagist/php-v/phoole/env/1.0.3)](https://packagist.org/packages/phoole/env)
 [![Latest Stable Version](https://img.shields.io/packagist/vpre/phoole/env.svg?style=flat)](https://packagist.org/packages/phoole/env)
 [![License](https://img.shields.io/github/license/phoole/env)]()
 
