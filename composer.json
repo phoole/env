@@ -2,7 +2,7 @@
     "name": "phoole/env",
     "type": "library",
     "license": "Apache-2.0",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "description": "Set environment variables",
     "keywords": ["phoole", "library", "php", "framework"],
     "authors": [
@@ -12,8 +12,8 @@
         }
     ],
     "require": {
-        "php": "^7.2",
-        "phoole/base": "~1.0.2"
+        "php": ">=7.2.0",
+        "phoole/base": "~1.0.6"
     },
     "require-dev": {
         "phpunit/phpunit": "^8"
@@ -29,6 +29,8 @@
         }
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit"
+        "test": "phpunit",
+        "check": "phpcs --standard=psr12 src/",
+        "format": "phpcbf --standard=psr12 src/"
     }
 }

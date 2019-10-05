@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Phoole (PHP7.2+)
  *
@@ -10,7 +11,8 @@ declare(strict_types=1);
 
 namespace Phoole\Env;
 
-use Phoole\Base\Reference\{ReferenceTrait, ReferenceInterface};
+use Phoole\Base\Reference\ReferenceTrait;
+use Phoole\Base\Reference\ReferenceInterface;
 
 /**
  * Load environment key/value pairs from certain path.
@@ -22,13 +24,15 @@ class Environment implements ReferenceInterface
     use ReferenceTrait;
 
     /**
-     * Load environment variables from a .env file
-     *
-     * @param  string $path          full path of the .env file
-     * @param  bool   $overwrite     overwrite existing values
-     * @throws \RuntimeException     if $path not readable
-     * @return object $this          able to chain
-     */
+         * Load environment variables from a .env file
+         *
+         * @param  string $path          full path of the .env file
+         * @param  bool   $overwrite     overwrite existing values
+         * @throws \RuntimeException     if $path not readable
+         * @return object $this          able to chain
+         */
+    
+
     public function load(string $path, bool $overwrite = false): object
     {
         return $this->parse($this->loadPath($path), $overwrite);
@@ -88,7 +92,6 @@ class Environment implements ReferenceInterface
                 (?: (\.|source) \s++ ([^#\n]*) )
             )\s*?(?:[#].*)?
         $~mx';
-
         $pairs = [];
         if (\preg_match_all($regex, $str, $matched, \PREG_SET_ORDER)) {
             foreach ($matched as $m) {
