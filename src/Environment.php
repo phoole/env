@@ -24,13 +24,13 @@ class Environment implements ReferenceInterface
     use ReferenceTrait;
 
     /**
-         * Load environment variables from a .env file
-         *
-         * @param  string $path          full path of the .env file
-         * @param  bool   $overwrite     overwrite existing values
-         * @throws \RuntimeException     if $path not readable
-         * @return object $this          able to chain
-         */
+     * Load environment variables from a .env file
+     *
+     * @param  string $path          full path of the .env file
+     * @param  bool   $overwrite     overwrite existing values
+     * @throws \RuntimeException     if $path not readable
+     * @return object $this          able to chain
+     */
     
 
     public function load(string $path, bool $overwrite = false): object
