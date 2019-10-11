@@ -31,8 +31,6 @@ class Environment implements ReferenceInterface
      * @throws \RuntimeException     if $path not readable
      * @return object $this          able to chain
      */
-    
-
     public function load(string $path, bool $overwrite = false): object
     {
         return $this->parse($this->loadPath($path), $overwrite);
