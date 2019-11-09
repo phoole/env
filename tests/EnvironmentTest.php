@@ -10,7 +10,9 @@ use PHPUnit\Framework\TestCase;
 class EnvironmentTest extends TestCase
 {
     private $obj;
+
     private $ref;
+
     private $file = __DIR__ . '/sample.env';
 
     protected function setUp(): void
@@ -23,14 +25,14 @@ class EnvironmentTest extends TestCase
     public function invokeMethod($methodName, array $parameters = array())
     {
         $method = $this->ref->getMethod($methodName);
-        $method->setAccessible(true);
+        $method->setAccessible(TRUE);
         return $method->invokeArgs($this->obj, $parameters);
     }
-    
+
     public function testLoad()
     {
         # overwrite is TRUE
-        $this->invokeMethod('load', [$this->file, true]);
+        $this->invokeMethod('load', [$this->file, TRUE]);
         $this->assertTrue(getenv('ROOT_DIR') === '/usr/local');
         putenv('ROOT_DIR');
 
@@ -38,7 +40,7 @@ class EnvironmentTest extends TestCase
         putenv('BIN_DIR');
 
         $this->assertTrue(getenv('TMP_DIR') === '/tmp');
-        $this->assertTrue(getenv('MY_TMP_DIR') === false);
+        $this->assertTrue(getenv('MY_TMP_DIR') === FALSE);
         putenv('TMP_DIR');
 
         $this->assertTrue(getenv('MY_DIR') === '/usr/local/my');
@@ -49,7 +51,7 @@ class EnvironmentTest extends TestCase
 
         # overwrite is FALSE;
         putenv('ROOT_DIR=/usr');
-        $this->invokeMethod('load', [$this->file, false]);
+        $this->invokeMethod('load', [$this->file, FALSE]);
 
         $this->assertTrue(getenv('ROOT_DIR') === '/usr');
 
@@ -72,16 +74,16 @@ class EnvironmentTest extends TestCase
     {
         $arr = [
             'ROOT_DIR' => '/',
-            'BIN_DIR'  => '${ROOT_DIR}bin',
-            'ETC_DIR'  => '${MY_ROOT:-${HOME_DIR:=/home}/my}/${ETC_NAME:=etc}'
+            'BIN_DIR' => '${ROOT_DIR}bin',
+            'ETC_DIR' => '${MY_ROOT:-${HOME_DIR:=/home}/my}/${ETC_NAME:=etc}'
         ];
 
         # overwrite
-        $this->invokeMethod('parse', [$arr, true]);
+        $this->invokeMethod('parse', [$arr, TRUE]);
         $this->assertTrue(getenv('ROOT_DIR') === '/');
         $this->assertTrue(getenv('BIN_DIR') === '/bin');
         $this->assertTrue(getenv('HOME_DIR') === '/home');
-        $this->assertTrue(getenv('MY_ROOT') === false);
+        $this->assertTrue(getenv('MY_ROOT') === FALSE);
         $this->assertTrue(getenv('ETC_NAME') === 'etc');
         $this->assertTrue(getenv('ETC_DIR') === '/home/my/etc');
         putenv('ROOT_DIR');
@@ -94,7 +96,7 @@ class EnvironmentTest extends TestCase
         putenv('ROOT_DIR=/mnt/');
         putenv('MY_ROOT=/myroot');
 
-        $this->invokeMethod('parse', [$arr, false]);
+        $this->invokeMethod('parse', [$arr, FALSE]);
         $this->assertTrue(getenv('ROOT_DIR') === '/mnt/');
         $this->assertTrue(getenv('BIN_DIR') === '/mnt/bin');
         $this->assertTrue(getenv('HOME_DIR') === '/home');
@@ -115,10 +117,10 @@ class EnvironmentTest extends TestCase
             $this->invokeMethod('loadPath', [$this->file]),
             [
                 'ROOT_DIR' => '/usr/local',
-                'BIN_DIR'  => '${ROOT_DIR}/bin',
-                'TMP_DIR'  => '${MY_TMP_DIR:-/tmp}',
+                'BIN_DIR' => '${ROOT_DIR}/bin',
+                'TMP_DIR' => '${MY_TMP_DIR:-/tmp}',
                 'CONF_DIR' => '${MY_DIR:=${ROOT_DIR}/my}/etc',
-                'EXT_DIR'  => "test 'one'"
+                'EXT_DIR' => "test 'one'"
             ]
         );
     }
@@ -206,7 +208,7 @@ class EnvironmentTest extends TestCase
             $this->invokeMethod('getReference', ['ENV_TEST:-test']),
             'test'
         );
-        $this->assertTrue(getenv('ENV_TEST') === false);
+        $this->assertTrue(getenv('ENV_TEST') === FALSE);
 
         # use preset value
         putenv('ENV_TEST=bingo');
@@ -236,15 +238,15 @@ class EnvironmentTest extends TestCase
     public function testSetEnv()
     {
         putenv('ENV_TEST');
-        $this->invokeMethod('setEnv', ['ENV_TEST', 'test', true]);
+        $this->invokeMethod('setEnv', ['ENV_TEST', 'test', TRUE]);
         $this->assertEquals(getenv('ENV_TEST'), 'test');
 
         putenv('ENV_TEST');
-        $this->invokeMethod('setEnv', ['ENV_TEST', 'test', false]);
+        $this->invokeMethod('setEnv', ['ENV_TEST', 'test', FALSE]);
         $this->assertEquals(getenv('ENV_TEST'), 'test');
 
         putenv('ENV_TEST=bingo');
-        $this->invokeMethod('setEnv', ['ENV_TEST', 'test', false]);
+        $this->invokeMethod('setEnv', ['ENV_TEST', 'test', FALSE]);
         $this->assertEquals(getenv('ENV_TEST'), 'bingo');
         putenv('ENV_TEST');
     }
