@@ -6,7 +6,8 @@
 [![Latest Stable Version](https://img.shields.io/github/v/release/phoole/env)](https://packagist.org/packages/phoole/env)
 [![License](https://img.shields.io/github/license/phoole/env)]()
 
-**phoole/env** is a library to load environment variables from a .env file. It requires PHP 7.2+ and is compliant with [PSR-1][PSR-1], [PSR-4][PSR-4], [PSR-12][PSR-12].
+**phoole/env** is a standalone library to load environment variables from a .env file. It requires PHP 7.2+ and is
+ compliant with [PSR-1][PSR-1], [PSR-4][PSR-4], [PSR-12][PSR-12].
 
 [PSR-1]: http://www.php-fig.org/psr/psr-1/ "PSR-1: Basic Coding Standard"
 [PSR-4]: http://www.php-fig.org/psr/psr-4/ "PSR-4: Autoloader"
@@ -18,7 +19,7 @@ Installation
 Install via the `composer` utility.
 
 ```
-composer require "phoole/env=1.*.*"
+composer require "phoole/env"
 ```
 
 or add the following lines to your `composer.json`
@@ -26,7 +27,7 @@ or add the following lines to your `composer.json`
 ```json
 {
     "require": {
-       "phoole/env": "~1.0.0"
+       "phoole/env": "1.*"
     }
 }
 ```
@@ -34,7 +35,7 @@ or add the following lines to your `composer.json`
 Usage
 ---
 
-- Put your environments in file `.env`. By default, existing environment variables are not overwritten.
+- Put your environments in file `.env`. By default, existing environment variables are **not overwritten**.
 
   ```shell
   # this is comment line
@@ -52,13 +53,10 @@ Usage
 
   ```php
   <?php
-  // ...
-  $env = new Phoole\Env\Environment();
-
   # load env file, will NOT overwrite existing env variables
-  $env->load(__DIR__ . '/.env');
+  (new Phoole\Env\Environment())->load(__DIR__ . '/.env');
 
-  // use your env
+  // use env values
   echo getenv('APP_DIR');
   ```
 
@@ -67,7 +65,9 @@ Features
 
 - Support shell default values, `${param:-new}` or `${param:=new}`
 
-- By default, **WILL NOT** overwrite any existing environment variables.
+- By default, **WILL NOT** overwrite any existing environment variables. which
+  makes possible for importing environment variables from command line in the
+  case of docker.
 
   To overwrite existing env variables,
 

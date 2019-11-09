@@ -26,12 +26,12 @@ class Environment implements ReferenceInterface
     /**
      * Load environment variables from a .env file
      *
-     * @param  string $path          full path of the .env file
-     * @param  bool   $overwrite     overwrite existing values
-     * @throws \RuntimeException     if $path not readable
+     * @param  string $path       full path of the .env file
+     * @param  bool   $overwrite  overwrite existing values
      * @return object $this          able to chain
+     * @throws \RuntimeException     if $path not readable
      */
-    public function load(string $path, bool $overwrite = false): object
+    public function load(string $path, bool $overwrite = FALSE): object
     {
         return $this->parse($this->loadPath($path), $overwrite);
     }
@@ -39,11 +39,11 @@ class Environment implements ReferenceInterface
     /**
      * Parse an array to set environment variables
      *
-     * @param  array  $arr          full path of the .env file
-     * @param  bool   $overwrite    overwrite existing env values
+     * @param  array $arr        full path of the .env file
+     * @param  bool  $overwrite  overwrite existing env values
      * @return object $this         able to chain
      */
-    public function parse(array $arr, bool $overwrite = false): object
+    public function parse(array $arr, bool $overwrite = FALSE): object
     {
         foreach ($arr as $key => $val) {
             $this->setEnv($key, $this->deReferenceString($val), $overwrite);
@@ -54,9 +54,9 @@ class Environment implements ReferenceInterface
     /**
      * load content of a file into array
      *
-     * @param  string $path        full path of the .env file
-     * @throws \RuntimeException   if $path not readable
+     * @param  string $path  full path of the .env file
      * @return array
+     * @throws \RuntimeException   if $path not readable
      */
     protected function loadPath(string $path): array
     {
@@ -79,7 +79,7 @@ class Environment implements ReferenceInterface
     protected function parseString(string $str): array
     {
         $regex =
-        '~^\s*+
+            '~^\s*+
             (?:
                 (?:([^#\s=]++) \s*+ = \s*+
                     (?|
@@ -109,24 +109,24 @@ class Environment implements ReferenceInterface
     protected function getReference(string $name)
     {
         $default = '';
-        if (false !== strpos($name, ':-')) {
+        if (FALSE !== strpos($name, ':-')) {
             list($name, $default) = explode(':-', $name, 2);
-        } elseif (false !== strpos($name, ':=')) {
+        } elseif (FALSE !== strpos($name, ':=')) {
             list($name, $default) = explode(':=', $name, 2);
-            $this->setEnv($name, $default, false);
+            $this->setEnv($name, $default, FALSE);
         }
-        return getenv($name) === false ? $default : getenv($name);
+        return getenv($name) === FALSE ? $default : getenv($name);
     }
 
     /**
-     * @param  string $key key to set
-     * @param  string $val value to set
+     * @param  string $key  key to set
+     * @param  string $val  value to set
      * @param  bool   $overwrite
      * @return void
      */
     protected function setEnv(string $key, string $val, bool $overwrite): void
     {
-        if ($overwrite || false === getenv($key)) {
+        if ($overwrite || FALSE === getenv($key)) {
             putenv("$key=$val");
         }
     }

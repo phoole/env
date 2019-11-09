@@ -2,7 +2,7 @@
     "name": "phoole/env",
     "type": "library",
     "license": "Apache-2.0",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Set environment variables",
     "keywords": ["phoole", "library", "php", "framework"],
     "authors": [
@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=7.2.0",
-        "phoole/base": "~1.0.11"
+        "phoole/base": "~1.0.18"
     },
     "require-dev": {
         "phpunit/phpunit": "^8"
