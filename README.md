@@ -6,8 +6,9 @@
 [![Latest Stable Version](https://img.shields.io/github/v/release/phoole/env)](https://packagist.org/packages/phoole/env)
 [![License](https://img.shields.io/github/license/phoole/env)]()
 
-**phoole/env** is a standalone library to load environment variables from a .env file. It requires PHP 7.2+ and is
- compliant with [PSR-1][PSR-1], [PSR-4][PSR-4], [PSR-12][PSR-12].
+Simple environment variables loader library for PHP. It loads environment variables
+from a .env file. It requires PHP 7.2+ and is compliant with [PSR-1][PSR-1],
+[PSR-4][PSR-4], [PSR-12][PSR-12].
 
 [PSR-1]: http://www.php-fig.org/psr/psr-1/ "PSR-1: Basic Coding Standard"
 [PSR-4]: http://www.php-fig.org/psr/psr-4/ "PSR-4: Autoloader"
